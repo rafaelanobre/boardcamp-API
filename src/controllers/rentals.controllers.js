@@ -87,7 +87,7 @@ export async function returnRental(req,res){
 
         const returnDate = dayjs().format("YYYY-MM-DD");
 
-        const datesDifference = returnDate.diff(rentDate, 'day');
+        const datesDifference = dayjs().diff(rentDate, 'day');
 
         if(datesDifference > daysRented){
             delayFee = pricePerDay * (datesDifference - daysRented);
