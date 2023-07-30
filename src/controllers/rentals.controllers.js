@@ -13,7 +13,20 @@ export async function listRentals(req,res){
         JOIN customers ON rentals."customerId"=customers.id
         JOIN games ON rentals."gameId"=games.id;`);
 
-        res.status(200).send(rentals.rows);
+        const formattedRentals = rentals.rows.map((rental) => ({
+            id: rental.id,
+            customerId: rental.customerId,
+            gameId: rental.gameId,
+            rentDate: rental.rentDate,
+            daysRented: rental.daysRented,
+            returnDate: rental.returnDate,
+            originalPrice: rental.originalPrice,
+            delayFee: rental.delayFee,
+            customer: { id: rental.customerId, name: rental.customerName },
+            game: { id: rental.gameId, name: rental.gameName },
+        }));
+
+        res.status(200).send(formattedRentals);
     }catch(err){
         res.status(500).send(err.message);
     }
