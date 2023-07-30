@@ -2,7 +2,7 @@ import { db } from "../database/database.connection.js";
 
 export async function listCustomers (req, res){
     try {
-        const customers = await db.query(`SELECT * FROM customers;`)
+        const customers = await db.query(`SELECT *, TO_CHAR(birthday, 'YYYY-MM-DD') AS birthday FROM customers;`)
 
         res.status(200).send(customers.rows);
     } catch(err){
@@ -13,7 +13,7 @@ export async function listCustomers (req, res){
 export async function listById(req, res){
     const {id} = req.params;
     try {
-        const customer = await db.query(`SELECT * FROM customers WHERE id=$1;`, [id]);
+        const customer = await db.query(`SELECT *, TO_CHAR(birthday, 'YYYY-MM-DD') AS birthday FROM customers WHERE id=$1;`, [id]);
         if(customer.rowCount===0){
             return res.status(404).send("Usuário não encontrado");
         }
