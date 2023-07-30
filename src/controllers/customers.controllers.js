@@ -34,7 +34,7 @@ export async function addCustomers (req, res){
         }
 
         await db.query (
-            `INSERT INTO customers(name, phone, cpf, birthday) VALUES($1,$2,$3,$4)`,
+            `INSERT INTO customers(name, phone, cpf, birthday) VALUES($1,$2,$3,$4);`,
             [name, phone, cpf, birthday]
         );
 
@@ -60,7 +60,7 @@ export async function updateCustomer(req, res){
             return res.status(409).send('Esse CPF já está cadastrado em outro cliente.');
         }
 
-        await db.query(`UPDATE customers SET name=$1, phone=$2, cpf=$3, birthday=$4 WHERE id=$5`,[name, phone, cpf, birthday, id]);
+        await db.query(`UPDATE customers SET name=$1, phone=$2, cpf=$3, birthday=$4 WHERE id=$5;`,[name, phone, cpf, birthday, id]);
         res.sendStatus(200);
     } catch(err){
         res.status(500).send(err.message);
