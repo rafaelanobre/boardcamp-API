@@ -8,5 +8,7 @@ app.use(cors());
 app.use(express.json());
 app.use(router);
 
-const port = 5000;
-app.listen(port, () => console.log(`Servidor está rodando na porta ${port}`));
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+	console.log(`Servidor rodando na porta ${port}`);
+});
